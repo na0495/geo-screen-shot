@@ -22,10 +22,11 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
+      working-directory: ./backend 
       run: |
-        ls -al
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      working-directory: ./backend
       run: |
         python manage.py test
