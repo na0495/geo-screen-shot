@@ -10,9 +10,9 @@ def upload_to(instance, filename):
 # Plot model
 class Plot(models.Model):
     name = models.CharField(max_length=200)
-    description = models.TextField(max_length=350)
+    size = models.DecimalField(max_digits=5, decimal_places=2)
     image = models.ImageField(_("Image"), upload_to=upload_to)
-    date = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
