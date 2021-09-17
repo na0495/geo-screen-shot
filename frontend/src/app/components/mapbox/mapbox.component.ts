@@ -21,9 +21,17 @@ export class MapboxComponent implements OnInit {
       center: [-78.880453, 42.897852]
     });
 
-    let Draw = new MapboxDraw();
+    let Draw = new MapboxDraw({
+      displayControlsDefault: false,
+      controls: {
+        polygon: true,
+        trash: true
+      },
+      defaultMode: 'draw_polygon'
+    });
 
     map.addControl(Draw)
+
 
     map.on('load', function() {
       // ALL YOUR APPLICATION CODE
