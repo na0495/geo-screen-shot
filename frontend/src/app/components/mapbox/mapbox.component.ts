@@ -14,7 +14,7 @@ export class MapboxComponent implements OnInit {
   ngOnInit() {
 
     let map = new mapboxgl.Map({
-      accessToken: '',
+      accessToken: 'pk.eyJ1IjoibmEwNDk1IiwiYSI6ImNrdG92cG9xdzBnbG4ybnF1bGJicmcwODQifQ.KbNPdaryp-KRrNYEPScQvQ',
       container: 'map',
       style: 'mapbox://styles/mapbox/light-v9',
       zoom: 5,
