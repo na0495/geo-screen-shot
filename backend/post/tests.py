@@ -49,7 +49,7 @@ class CreatePlotTestCase(APITestCase):
         }
 
     def test_create_plot_with_valid_data(self):
-        response = client.post(reverse('create_plot'), self.valid_data)
+        response = client.post(reverse('create_plot'), self.valid_data, format='multipart')
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(Plot.objects.count(), 1)
         self.assertEqual(Plot.objects.get().name, 'test_plot')
