@@ -12,7 +12,6 @@ class CreatePlotView(generics.CreateAPIView):
     serializer_class = PlotSerializer
 
     def post(self, request, format=None):
-        print(request.data)
         serializer = PlotSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
