@@ -16,10 +16,6 @@ jobs:
         python-version: [3.9]
 
     steps:
-    - name : get into backend folder
-      run :
-        ls
-        cd ./backend
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
       uses: actions/setup-python@v2
@@ -27,6 +23,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install Dependencies
       run: |
+        ls -al
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
