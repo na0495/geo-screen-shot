@@ -5,7 +5,10 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item href="#">Link 1</a>
+      <div mat-list-item *ngFor="let index of plotList">
+        <img mat-list-icon src="{{index.image}}" alt="{{index.name}}">
+        <p mat-line>{{index.name}}</p>
+      </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
