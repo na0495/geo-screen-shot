@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import * as MapboxDraw from "@mapbox/mapbox-gl-draw";
+import { NgxCaptureService } from 'ngx-capture';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-mapbox',
@@ -8,8 +10,11 @@ import * as MapboxDraw from "@mapbox/mapbox-gl-draw";
   styleUrls: ['./mapbox.component.css']
 })
 export class MapboxComponent implements OnInit {
+  @ViewChild('screen', { static: true }) screen: any;
 
-  constructor() { }
+  constructor(
+    private _ngxCaptureService: NgxCaptureService
+  ) { }
 
   ngOnInit() {
 
@@ -35,10 +40,17 @@ export class MapboxComponent implements OnInit {
     map.on('load', function() {
       const data = Draw.getAll();
 
-
-
-
     });
 
+
+
+  }
+  capture() {
+    this._ngxCaptureService.getImage(this.screen.nativeElement, true)
+    .pipe(
+      tap(img => {
+        console.log(img);
+      })
+    ).subscribe();
   }
 }

@@ -13,6 +13,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MapboxComponent } from './components/mapbox/mapbox.component';
+import { NgxCaptureModule } from 'ngx-capture';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { MapboxComponent } from './components/mapbox/mapbox.component';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    NgxCaptureModule
 
   ],
   providers: [],
