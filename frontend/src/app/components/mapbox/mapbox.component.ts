@@ -12,6 +12,8 @@ import { tap } from 'rxjs/operators';
 export class MapboxComponent implements OnInit {
   @ViewChild('screen', { static: true }) screen: any;
 
+  imgBase64 = '';
+
   constructor(
     private _ngxCaptureService: NgxCaptureService
   ) { }
@@ -49,8 +51,33 @@ export class MapboxComponent implements OnInit {
     this._ngxCaptureService.getImage(this.screen.nativeElement, true)
     .pipe(
       tap(img => {
-        console.log(img);
+        this.imgBase64 = img;
       })
     ).subscribe();
+  }
+
+  DataURIToBlob(dataURI: string) {
+    const splitDataURI = dataURI.split(',')
+    const byteString = splitDataURI[0].indexOf('base64') >= 0 ? atob(splitDataURI[1]) : decodeURI(splitDataURI[1])
+    const mimeString = splitDataURI[0].split(':')[1].split(';')[0]
+
+    const ia = new Uint8Array(byteString.length)
+    for (let i = 0; i < byteString.length; i++)
+        ia[i] = byteString.charCodeAt(i)
+
+        return new Blob([ia], { type: mimeString })
+  }
+
+  save(){
+    const file = this.DataURIToBlob(this.imgBase64)
+    const formData = new FormData();
+    formData.append('image', file, 'image.png')
+    formData.append('name', 'image.png')
+
+
+    // this.http.post(this.ip+url,formData).subscribe(data=>{
+
+
+    // })
   }
 }
