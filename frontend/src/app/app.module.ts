@@ -14,6 +14,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MapboxComponent } from './components/mapbox/mapbox.component';
 import { NgxCaptureModule } from 'ngx-capture';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
+
 
 @NgModule({
   declarations: [
@@ -33,10 +35,11 @@ import { NgxCaptureModule } from 'ngx-capture';
     MatToolbarModule,
     MatSidenavModule,
     MatListModule,
+    HttpClientModule,
     NgxCaptureModule
 
   ],
-  providers: [],
+  providers: [HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

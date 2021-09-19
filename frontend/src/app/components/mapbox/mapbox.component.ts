@@ -3,6 +3,7 @@ import * as mapboxgl from 'mapbox-gl';
 import * as MapboxDraw from "@mapbox/mapbox-gl-draw";
 import { NgxCaptureService } from 'ngx-capture';
 import { tap } from 'rxjs/operators';
+import { PostService } from 'src/app/services/post.service';
 
 @Component({
   selector: 'app-mapbox',
@@ -15,7 +16,8 @@ export class MapboxComponent implements OnInit {
   imgBase64 = '';
 
   constructor(
-    private _ngxCaptureService: NgxCaptureService
+    private _ngxCaptureService: NgxCaptureService,
+    private _postService: PostService
   ) { }
 
   ngOnInit() {
@@ -52,6 +54,7 @@ export class MapboxComponent implements OnInit {
     .pipe(
       tap(img => {
         this.imgBase64 = img;
+        this.save();
       })
     ).subscribe();
   }
@@ -73,6 +76,14 @@ export class MapboxComponent implements OnInit {
     const formData = new FormData();
     formData.append('image', file, 'image.png')
     formData.append('name', 'image.png')
+    this._postService.create(formData).subscribe(
+      data => {
+        console.log(data)
+      },
+      error => {
+        console.log(error)
+      }
+    )
 
 
     // this.http.post(this.ip+url,formData).subscribe(data=>{
