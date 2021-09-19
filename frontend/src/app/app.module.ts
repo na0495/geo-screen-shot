@@ -31,7 +31,8 @@ import { MapboxComponent } from './components/mapbox/mapbox.component';
     LayoutModule,
     MatToolbarModule,
     MatSidenavModule,
-    MatListModule
+    MatListModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
