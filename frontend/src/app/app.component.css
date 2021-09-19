@@ -15,3 +15,12 @@
   top: 0;
   z-index: 1;
 }
+
+.image{
+  width: 250px;
+  height: 250px;
+  margin: 0 auto;
+  display: block;
+  margin-bottom: 20px;
+
+}
