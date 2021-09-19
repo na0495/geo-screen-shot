@@ -16,9 +16,9 @@ export class MapboxComponent implements OnInit {
     let map = new mapboxgl.Map({
       accessToken: 'pk.eyJ1IjoibmEwNDk1IiwiYSI6ImNrdG92cG9xdzBnbG4ybnF1bGJicmcwODQifQ.KbNPdaryp-KRrNYEPScQvQ',
       container: 'map',
-      style: 'mapbox://styles/mapbox/light-v9',
-      zoom: 5,
-      center: [-78.880453, 42.897852]
+      style: 'mapbox://styles/mapbox/outdoors-v11',
+      zoom: 8,
+      center: [-4.794525, 35.0849336]
     });
 
     let Draw = new MapboxDraw({
