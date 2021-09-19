@@ -31,8 +31,7 @@ export class MapboxComponent implements OnInit {
     });
 
     map.addControl(Draw)
-
-
+    map.addControl(new mapboxgl.FullscreenControl());
     map.on('load', function() {
       // ALL YOUR APPLICATION CODE
     });
