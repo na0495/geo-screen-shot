@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import * as MapboxDraw from "@mapbox/mapbox-gl-draw";
 import { NgxCaptureService } from 'ngx-capture';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { PostService } from 'src/app/services/post.service';
 
 @Component({
@@ -14,6 +14,7 @@ export class MapboxComponent implements OnInit {
   @ViewChild('screen', { static: true }) screen: any;
 
   imgBase64 = '';
+  mapData: any;
 
   constructor(
     private _ngxCaptureService: NgxCaptureService,
@@ -30,6 +31,9 @@ export class MapboxComponent implements OnInit {
       center: [-4.794525, 35.0849336]
     });
 
+    var drawFeatureID = '';
+    var newDrawFeature = false;
+
     let Draw = new MapboxDraw({
       displayControlsDefault: false,
       controls: {
@@ -41,22 +45,24 @@ export class MapboxComponent implements OnInit {
 
     map.addControl(Draw)
     map.addControl(new mapboxgl.FullscreenControl());
-    map.on('load', function() {
-      const data = Draw.getAll();
-
+    map.on('draw.create', () => {
+      newDrawFeature = true;
+      this.mapData = map.getCanvas().toDataURL()
     });
+     map.on('click', function(e) {
+      if (!newDrawFeature) {
+        var drawFeatureAtPoint = Draw.getFeatureIdsAt(e.point);
+        //if another drawFeature is not found - reset drawFeatureID
+        drawFeatureID = drawFeatureAtPoint.length ? drawFeatureAtPoint[0] : '';
+    }
 
+    newDrawFeature = false;
 
-
+});
   }
   capture() {
-    this._ngxCaptureService.getImage(this.screen.nativeElement, true)
-    .pipe(
-      tap(img => {
-        this.imgBase64 = img;
-        this.save();
-      })
-    ).subscribe();
+    this.imgBase64 = this.mapData;
+    this.save();
   }
 
   DataURIToBlob(dataURI: string) {
