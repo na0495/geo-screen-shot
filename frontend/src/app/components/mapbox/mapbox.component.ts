@@ -81,7 +81,7 @@ export class MapboxComponent implements OnInit {
     const file = this.DataURIToBlob(this.imgBase64)
     const formData = new FormData();
     formData.append('image', file, 'image.png')
-    formData.append('name', 'image.png')
+    formData.append('name', 'plot')
     this._postService.create(formData).subscribe(
       data => {
         console.log(data)
