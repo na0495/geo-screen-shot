@@ -17,10 +17,17 @@
 }
 
 .image{
-  width: 75px;
+  width: 150px;
   height: 75px;
   margin: 0 auto;
   display: block;
   margin-bottom: 20px;
+}
 
+.title{
+  font-size: 20px;
+  font-weight: bold;
+  align-items: center;
+  display: flex;
+  justify-content: center;
 }
