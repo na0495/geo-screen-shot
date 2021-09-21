@@ -17,6 +17,7 @@ export class MapboxComponent implements OnInit {
   imgBase64 = '';
   mapData: any;
   coordinates: any;
+  geo: any;
 
   constructor(
     private _postService: PostService
@@ -52,9 +53,8 @@ export class MapboxComponent implements OnInit {
     map.on('draw.create', () => {
       newDrawFeature = true;
       const data = Draw.getAll();
-      console.log(data.features[0].geometry);
-      this.coordinates = data.features[0].geometry
-      console.log(JSON.stringify(this.coordinates))
+      this.geo = data.features[0].geometry;
+      this.coordinates = this.geo.coordinates;
       this.mapData = map.getCanvas().toDataURL()
     });
     map.on('click', function(e) {
@@ -70,7 +70,7 @@ export class MapboxComponent implements OnInit {
   }
   capture(event: Event) {
     this.imgBase64 = this.mapData;
-    this.save(event);
+    // this.save(event);
   }
 
   DataURIToBlob(dataURI: string) {

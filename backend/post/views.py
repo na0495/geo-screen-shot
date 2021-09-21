@@ -1,8 +1,8 @@
 from rest_framework import generics, status
 from rest_framework.parsers import FormParser,MultiPartParser
 from rest_framework.response import Response
-from .models import Plot
-from .serializers import PlotSerializer
+from .models import Coordinates, Plot
+from .serializers import CoordinatesSerializer, PlotSerializer
 
 # Create your views here.
 #* Create Plot Api View
@@ -12,7 +12,16 @@ class CreatePlotView(generics.CreateAPIView):
     serializer_class = PlotSerializer
 
     def post(self, request, format=None):
-        serializer = PlotSerializer(data=request.data)
+        coordinates = request.data.get('coordinates')
+        print(coordinates)
+        name = request.data.get('name')
+        image = request.data.get('image')
+        # if coordinates:
+        #     for i in coordinates :
+        #         create_coordinate = CoordinatesSerializer(latitude=i['latitude'], longitude=i['longitude'])
+        #         create_coordinate.save()
+            
+        serializer = PlotSerializer(data={'name': name, 'image': image, 'coordinates': coordinates})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -42,3 +51,6 @@ class DeletePlotView(generics.DestroyAPIView):
 class ListPlotView(generics.ListAPIView):
     queryset = Plot.objects.all()
     serializer_class = PlotSerializer
+
+
+

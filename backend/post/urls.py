@@ -10,4 +10,8 @@ urlpatterns = [
     path('plot/<int:pk>/delete/', DeletePlotView.as_view(), name='delete_plot'),
     path('plot/<int:pk>/retrive/', RetrievePlotView.as_view(), name='retrive_plot'),
 
+    # coordinates API's endpoints
+
+    # path('coordinates/create/', CreateCoordinatesView.as_view(), name='create_coordinates'),
+
 ]
