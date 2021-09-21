@@ -42,9 +42,9 @@ ng serve
 
 ## Code scaffolding
 ```sh
-python -m venv env
+ng generate component component-name
 ``` 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`, run :
 
 ## Build run 
 
