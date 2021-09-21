@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import * as MapboxDraw from "@mapbox/mapbox-gl-draw";
 import { NgxCaptureService } from 'ngx-capture';
@@ -12,6 +12,7 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class MapboxComponent implements OnInit {
   @ViewChild('screen', { static: true }) screen: any;
+  @Output() refresh = new EventEmitter<Event>();
 
   imgBase64 = '';
   mapData: any;
@@ -45,6 +46,9 @@ export class MapboxComponent implements OnInit {
 
     map.addControl(Draw)
     map.addControl(new mapboxgl.FullscreenControl());
+    map.on('load', () => {
+      this.mapData = map.getCanvas().toDataURL()
+    });
     map.on('draw.create', () => {
       newDrawFeature = true;
       this.mapData = map.getCanvas().toDataURL()
@@ -60,9 +64,9 @@ export class MapboxComponent implements OnInit {
 
 });
   }
-  capture() {
+  capture(event: Event) {
     this.imgBase64 = this.mapData;
-    this.save();
+    this.save(event);
   }
 
   DataURIToBlob(dataURI: string) {
@@ -77,7 +81,7 @@ export class MapboxComponent implements OnInit {
         return new Blob([ia], { type: mimeString })
   }
 
-  save(){
+  save(event: Event){
     const file = this.DataURIToBlob(this.imgBase64)
     const formData = new FormData();
     formData.append('image', file, 'image.png')
@@ -85,6 +89,7 @@ export class MapboxComponent implements OnInit {
     this._postService.create(formData).subscribe(
       data => {
         console.log(data)
+        this.refresh.emit(event);
       },
       error => {
         console.log(error)

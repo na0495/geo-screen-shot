@@ -23,6 +23,6 @@
       </button>
       <span>frontend</span>
     </mat-toolbar>
-    <app-mapbox></app-mapbox>
+    <app-mapbox (refresh)="onChange($event)"></app-mapbox>
   </mat-sidenav-content>
 </mat-sidenav-container>

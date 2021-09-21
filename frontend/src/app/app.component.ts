@@ -11,6 +11,8 @@ import { PostService } from './services/post.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  // refresh
+  event?: Event;
   plotList: Plot [] = [];
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -28,4 +30,11 @@ export class AppComponent implements OnInit {
       error => console.log(error)
     );
   }
+
+  onChange(event: Event) {
+    this.event = event;
+    this.ngOnInit();
+
+  }
+
 }
