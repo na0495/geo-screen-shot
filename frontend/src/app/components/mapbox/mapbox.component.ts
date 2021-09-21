@@ -70,7 +70,7 @@ export class MapboxComponent implements OnInit {
   }
   capture(event: Event) {
     this.imgBase64 = this.mapData;
-    // this.save(event);
+    this.save(event);
   }
 
   DataURIToBlob(dataURI: string) {
