@@ -16,9 +16,9 @@ export class MapboxComponent implements OnInit {
 
   imgBase64 = '';
   mapData: any;
+  coordinates: any;
 
   constructor(
-    private _ngxCaptureService: NgxCaptureService,
     private _postService: PostService
   ) { }
 
@@ -51,9 +51,13 @@ export class MapboxComponent implements OnInit {
     });
     map.on('draw.create', () => {
       newDrawFeature = true;
+      const data = Draw.getAll();
+      console.log(data.features[0].geometry);
+      this.coordinates = data.features[0].geometry
+      console.log(JSON.stringify(this.coordinates))
       this.mapData = map.getCanvas().toDataURL()
     });
-     map.on('click', function(e) {
+    map.on('click', function(e) {
       if (!newDrawFeature) {
         var drawFeatureAtPoint = Draw.getFeatureIdsAt(e.point);
         //if another drawFeature is not found - reset drawFeatureID
@@ -62,7 +66,7 @@ export class MapboxComponent implements OnInit {
 
     newDrawFeature = false;
 
-});
+  });
   }
   capture(event: Event) {
     this.imgBase64 = this.mapData;
@@ -86,6 +90,7 @@ export class MapboxComponent implements OnInit {
     const formData = new FormData();
     formData.append('image', file, 'image.png')
     formData.append('name', 'plot')
+    formData.append('coordinates', JSON.stringify(this.coordinates))
     this._postService.create(formData).subscribe(
       data => {
         console.log(data)
@@ -95,11 +100,5 @@ export class MapboxComponent implements OnInit {
         console.log(error)
       }
     )
-
-
-    // this.http.post(this.ip+url,formData).subscribe(data=>{
-
-
-    // })
   }
 }
