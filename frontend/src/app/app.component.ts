@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
       map(result => result.matches),
       shareReplay()
     );
+  filterData: any;
   constructor(
     private breakpointObserver: BreakpointObserver,
     private _postService: PostService
@@ -37,6 +38,11 @@ export class AppComponent implements OnInit {
     this.event = event;
     this.ngOnInit();
 
+  }
+
+  loadPolygon(id: number) {
+    let filter = this.plotList.filter(((item: { id: number; }) => item.id === id))
+    this.filterData = filter
   }
 
 }

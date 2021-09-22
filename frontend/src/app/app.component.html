@@ -8,6 +8,7 @@
       <div mat-list-item *ngFor="let index of plotList">
         <img mat-list-icon class="image" src="{{index.properties.image}}" alt="{{index.properties.name}}">
         <p mat-line class="title">{{index.properties.name}} created at {{index.properties.created_at}}</p>
+        <button (click)="loadPolygon(index.id)">Load format</button>
       </div>
     </mat-nav-list>
   </mat-sidenav>
@@ -23,6 +24,6 @@
       </button>
       <span>frontend</span>
     </mat-toolbar>
-    <app-mapbox (refresh)="onChange($event)"></app-mapbox>
+    <app-mapbox (refresh)="onChange($event)" [filterData]="filterData"></app-mapbox>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import * as MapboxDraw from "@mapbox/mapbox-gl-draw";
 import { NgxCaptureService } from 'ngx-capture';
@@ -13,8 +13,16 @@ import { PostService } from 'src/app/services/post.service';
 export class MapboxComponent implements OnInit {
   @ViewChild('screen', { static: true }) screen: any;
   @Output() refresh = new EventEmitter<Event>();
+  @Input('filterData')
+
+  set filterData(filterData: string) {
+    this.mapDraw = filterData;
+    this.ngOnInit();
+
+  }
 
   imgBase64 = '';
+  mapDraw: any;
   mapData: any;
   coordinates: any;
   geo: any;
@@ -49,6 +57,22 @@ export class MapboxComponent implements OnInit {
     map.addControl(new mapboxgl.FullscreenControl());
     map.on('load', () => {
       this.mapData = map.getCanvas().toDataURL()
+      console.log(this.mapDraw[0])
+      map.addSource('trace', { type: 'geojson', data: this.mapDraw[0] });
+      map.addLayer({
+        'id': 'trace',
+        'type': 'line',
+        'source': 'trace',
+        'paint': {
+        'line-color': 'yellow',
+        'line-opacity': 0.75,
+        'line-width': 5
+        }
+        });
+      // map.addSource('geojson', {
+      //   type: 'geojson',
+      //   data: this.mapDraw
+      // });
     });
     map.on('draw.create', () => {
       newDrawFeature = true;
@@ -70,6 +94,11 @@ export class MapboxComponent implements OnInit {
   capture(event: Event) {
     this.imgBase64 = this.mapData;
     this.save(event);
+  }
+  clean()
+  {
+    this.mapDraw = '';
+    this.ngOnInit()
   }
 
   DataURIToBlob(dataURI: string) {
