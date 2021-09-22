@@ -5,10 +5,10 @@
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <!-- <div mat-list-item *ngFor="let index of plotList">
-        <img mat-list-icon class="image" src="{{index.image}}" alt="{{index.name}}">
-        <p mat-line class="title">{{index.name}}</p>
-      </div> -->
+      <div mat-list-item *ngFor="let index of plotList">
+        <img mat-list-icon class="image" src="{{index.properties.image}}" alt="{{index.properties.name}}">
+        <p mat-line class="title">{{index.properties.name}} created at {{index.properties.created_at}}</p>
+      </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

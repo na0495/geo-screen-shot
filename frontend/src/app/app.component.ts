@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { Plot } from './models/plot.model';
 import { PostService } from './services/post.service';
 
 @Component({
@@ -13,7 +12,7 @@ import { PostService } from './services/post.service';
 export class AppComponent implements OnInit {
   // refresh
   event?: Event;
-  plotList: Plot [] = [];
+  plotList: any = []
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
@@ -26,7 +25,10 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this._postService.getAll().subscribe(
-      data => this.plotList = data,
+      data => {
+        this.plotList = data.features
+        console.log(this.plotList)
+      },
       error => console.log(error)
     );
   }
