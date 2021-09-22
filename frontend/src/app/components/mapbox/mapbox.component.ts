@@ -53,8 +53,7 @@ export class MapboxComponent implements OnInit {
     map.on('draw.create', () => {
       newDrawFeature = true;
       const data = Draw.getAll();
-      this.geo = data.features[0].geometry;
-      this.coordinates = this.geo.coordinates;
+      this.coordinates = data.features[0].geometry;
       this.mapData = map.getCanvas().toDataURL()
     });
     map.on('click', function(e) {
@@ -90,7 +89,7 @@ export class MapboxComponent implements OnInit {
     const formData = new FormData();
     formData.append('image', file, 'image.png')
     formData.append('name', 'plot')
-    formData.append('coordinates', JSON.stringify(this.coordinates))
+    formData.append('geofence', JSON.stringify(this.coordinates))
     this._postService.create(formData).subscribe(
       data => {
         console.log(data)

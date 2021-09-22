@@ -3,6 +3,7 @@ from rest_framework.parsers import FormParser,MultiPartParser
 from rest_framework.response import Response
 from .models import Plot
 from .serializers import PlotSerializer
+from rest_framework_gis.pagination import GeoJsonPagination
 
 # Create your views here.
 #* Create Plot Api View
@@ -42,3 +43,4 @@ class DeletePlotView(generics.DestroyAPIView):
 class ListPlotView(generics.ListAPIView):
     queryset = Plot.objects.all()
     serializer_class = PlotSerializer
+    pagination_class = GeoJsonPagination
